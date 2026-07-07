@@ -1,0 +1,2 @@
+# zone_name|record_name|record_type|ttl|proxied
+example.com|home.example.com|A|120|false

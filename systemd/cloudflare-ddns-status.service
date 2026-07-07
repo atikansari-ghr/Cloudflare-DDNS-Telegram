@@ -1,0 +1,12 @@
+[Unit]
+Description=Daily Cloudflare DDNS IP Status Telegram Report
+Wants=network-online.target
+After=network-online.target nss-lookup.target
+
+[Service]
+Type=oneshot
+WorkingDirectory=__INSTALL_DIR__
+ExecStartPre=/bin/sleep 30
+ExecStart=__INSTALL_DIR__/daily-status.sh
+User=root
+Group=root

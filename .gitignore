@@ -1,0 +1,19 @@
+# Runtime configuration (contains secrets)
+config/config.env
+config/records.conf
+config/ip-state.json
+
+# Logs and backups
+logs/
+backup/
+
+# Release archives
+*.zip
+*.tar.gz
+
+# Editor/OS noise
+.vscode/
+.idea/
+*.swp
+.DS_Store
+Thumbs.db

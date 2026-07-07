@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+set -euo pipefail
+INSTALL_DIR="/opt/cloudflare-ddns-telegram"; BACKUP_DIR="$INSTALL_DIR/backup/upgrade-$(date '+%Y%m%d-%H%M%S')"
+[[ "${EUID}" -ne 0 ]] && { echo "Please run as root: sudo ./upgrade.sh"; exit 1; }
+[[ ! -d "$INSTALL_DIR" ]] && { echo "Existing installation not found at $INSTALL_DIR. Use sudo ./install.sh"; exit 1; }
+echo "[+] Backing up current installation to $BACKUP_DIR"; mkdir -p "$BACKUP_DIR"; cp -a "$INSTALL_DIR"/*.sh "$BACKUP_DIR/" 2>/dev/null || true; cp -a "$INSTALL_DIR/config" "$BACKUP_DIR/config" 2>/dev/null || true; cp -a /etc/systemd/system/cloudflare-ddns* "$BACKUP_DIR/" 2>/dev/null || true
+echo "[+] Stopping timers"; systemctl stop cloudflare-ddns.timer 2>/dev/null || true; systemctl stop cloudflare-ddns-status.timer 2>/dev/null || true
+mkdir -p "$INSTALL_DIR"/{logs,backup,config}; cp update-ddns.sh telegram.sh logger.sh cloudflare-api.sh utils.sh daily-status.sh upgrade.sh "$INSTALL_DIR/"; chmod +x "$INSTALL_DIR"/*.sh
+[[ ! -f "$INSTALL_DIR/config/config.env" ]] && cp config/config.env.example "$INSTALL_DIR/config/config.env"; [[ ! -f "$INSTALL_DIR/config/records.conf" ]] && cp config/records.conf.example "$INSTALL_DIR/config/records.conf"
+CONFIG_ENV="$INSTALL_DIR/config/config.env"; add(){ grep -q "^$1=" "$CONFIG_ENV" || echo "$2" >> "$CONFIG_ENV"; }
+add DAILY_STATUS_ENABLED 'DAILY_STATUS_ENABLED="yes"'; add DAILY_STATUS_TIME 'DAILY_STATUS_TIME="09:00"'; add SEND_NO_CHANGE 'SEND_NO_CHANGE="no"'; add SEND_STARTUP 'SEND_STARTUP="yes"'; add IPV4_PROVIDER 'IPV4_PROVIDER="https://api.ipify.org"'; add IPV6_PROVIDER 'IPV6_PROVIDER="https://api64.ipify.org"'; add STATE_FILE 'STATE_FILE="/opt/cloudflare-ddns-telegram/config/ip-state.json"'; add RECORDS_FILE 'RECORDS_FILE="/opt/cloudflare-ddns-telegram/config/records.conf"'; add LOG_FILE 'LOG_FILE="/opt/cloudflare-ddns-telegram/logs/cloudflare-ddns.log"'; chmod 600 "$CONFIG_ENV" "$INSTALL_DIR/config/records.conf"
+cp systemd/cloudflare-ddns.service /etc/systemd/system/cloudflare-ddns.service; cp systemd/cloudflare-ddns.timer /etc/systemd/system/cloudflare-ddns.timer; cp systemd/cloudflare-ddns-status.service /etc/systemd/system/cloudflare-ddns-status.service; cp systemd/cloudflare-ddns-status.timer /etc/systemd/system/cloudflare-ddns-status.timer; cp systemd/cloudflare-ddns.logrotate /etc/logrotate.d/cloudflare-ddns-telegram
+sed -i "s|__INSTALL_DIR__|$INSTALL_DIR|g" /etc/systemd/system/cloudflare-ddns.service /etc/systemd/system/cloudflare-ddns-status.service
+time="$(grep '^DAILY_STATUS_TIME=' "$CONFIG_ENV"|cut -d= -f2-|tr -d '"')"; if [[ "$time" == *:* ]]; then h="${time%%:*}"; m="${time##*:}"; sed -i "s|OnCalendar=.*|OnCalendar=*-*-* ${h}:${m}:00|g" /etc/systemd/system/cloudflare-ddns-status.timer; fi
+systemctl daemon-reload; systemctl enable --now cloudflare-ddns.timer; enabled="$(grep '^DAILY_STATUS_ENABLED=' "$CONFIG_ENV"|cut -d= -f2-|tr -d '"')"; [[ "${enabled:-yes}" == yes ]] && systemctl enable --now cloudflare-ddns-status.timer
+echo "[+] Running validation test"; "$INSTALL_DIR/update-ddns.sh" || true; echo "Upgrade complete. Backup saved at: $BACKUP_DIR"

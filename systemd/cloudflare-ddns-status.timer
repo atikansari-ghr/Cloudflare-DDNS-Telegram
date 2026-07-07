@@ -1,0 +1,11 @@
+[Unit]
+Description=Send Daily Cloudflare DDNS IP Status Telegram Report
+
+[Timer]
+OnCalendar=*-*-* 09:00:00
+AccuracySec=5min
+Persistent=true
+Unit=cloudflare-ddns-status.service
+
+[Install]
+WantedBy=timers.target
