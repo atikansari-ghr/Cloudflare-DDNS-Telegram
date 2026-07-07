@@ -1,0 +1,4 @@
+# Sourced files are runtime paths (config.env is created by install.sh, and
+# sibling scripts are sourced from the install dir), so ShellCheck cannot
+# follow them during CI. Suppress the "can't follow source" diagnostics only.
+disable=SC1090,SC1091

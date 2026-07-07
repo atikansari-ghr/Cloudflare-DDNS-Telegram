@@ -3,7 +3,7 @@ set -euo pipefail
 INSTALL_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"; source "$INSTALL_DIR/config/config.env"; source "$INSTALL_DIR/logger.sh"; source "$INSTALL_DIR/telegram.sh"; source "$INSTALL_DIR/utils.sh"; source "$INSTALL_DIR/cloudflare-api.sh"
 SERVER_NAME="$(hostname -s 2>/dev/null || hostname)"; [[ "${DAILY_STATUS_ENABLED:-no}" != yes ]] && { log_msg INFO "Daily status is disabled."; exit 0; }; [[ "${TELEGRAM_ENABLED:-no}" != yes ]] && { log_msg INFO "Telegram is disabled."; exit 0; }
 ipv4="$(get_public_ipv4)"; is_valid_ipv4 "$ipv4" || ipv4="not-detected"; ipv6="$(get_public_ipv6)"; is_valid_ipv6 "$ipv6" || ipv6="not-detected"; lines=""; overall="OK"
-while IFS='|' read -r zone record type ttl proxied; do [[ -z "${zone:-}" || "$zone" =~ ^# ]] && continue; zone="$(trim_spaces "$zone")"; record="$(trim_spaces "$record")"; type="$(trim_spaces "${type:-A}")"; zid="$(get_zone_id "$zone")"; [[ -z "$zid" ]] && { lines+=$'
+while IFS='|' read -r zone record type _ _; do [[ -z "${zone:-}" || "$zone" =~ ^# ]] && continue; zone="$(trim_spaces "$zone")"; record="$(trim_spaces "$record")"; type="$(trim_spaces "${type:-A}")"; zid="$(get_zone_id "$zone")"; [[ -z "$zid" ]] && { lines+=$'
 '"❌ $record — zone not found"; overall="ISSUE"; continue; }; check(){ rid="$(get_record_id "$zid" "$record" "$1")"; [[ -z "$rid" ]] && { lines+=$'
 '"❌ $record $1 — record missing"; overall="ISSUE"; return; }; cfip="$(get_record_content "$zid" "$rid")"; if [[ "$2" == not-detected ]]; then lines+=$'
 '"⚠️ $record $1 — public IP not detected, Cloudflare: $cfip"; overall="ISSUE"; elif [[ "$cfip" == "$2" ]]; then lines+=$'
