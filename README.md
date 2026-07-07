@@ -1,6 +1,6 @@
 # Cloudflare-DDNS-Telegram
 
-[![ShellCheck](https://github.com/YOUR_USERNAME/Cloudflare-DDNS-Telegram/actions/workflows/shellcheck.yml/badge.svg)](https://github.com/YOUR_USERNAME/Cloudflare-DDNS-Telegram/actions/workflows/shellcheck.yml)
+[![ShellCheck](https://github.com/atikansari-ghr/Cloudflare-DDNS-Telegram/actions/workflows/shellcheck.yml/badge.svg)](https://github.com/atikansari-ghr/Cloudflare-DDNS-Telegram/actions/workflows/shellcheck.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 A lightweight Dynamic DNS (DDNS) updater for Cloudflare with Telegram notifications, written in pure Bash. It periodically detects your public IP and keeps your Cloudflare DNS records pointed at it — ideal for home servers, self-hosted services, and any machine on a dynamic ISP connection.
@@ -29,7 +29,7 @@ No Python, no Docker, no daemons — just `bash`, `curl`, `jq`, and systemd time
 ## Installation
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/Cloudflare-DDNS-Telegram.git
+git clone https://github.com/atikansari-ghr/Cloudflare-DDNS-Telegram.git
 cd Cloudflare-DDNS-Telegram
 sudo chmod +x *.sh
 sudo ./install.sh
