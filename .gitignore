@@ -11,6 +11,7 @@ backup/
 *.zip
 *.tar.gz
 
+
 # Editor/OS noise
 .vscode/
 .idea/

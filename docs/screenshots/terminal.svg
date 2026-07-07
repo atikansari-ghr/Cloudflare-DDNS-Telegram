@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="268" viewBox="0 0 880 268" font-family="'Cascadia Code','JetBrains Mono','Fira Code',Consolas,Menlo,monospace">
+  <!-- window -->
+  <rect x="0" y="0" width="880" height="268" rx="10" fill="#1e1e2e"/>
+  <rect x="0" y="0" width="880" height="36" rx="10" fill="#181825"/>
+  <rect x="0" y="26" width="880" height="10" fill="#181825"/>
+  <circle cx="22" cy="18" r="6" fill="#f38ba8"/>
+  <circle cx="42" cy="18" r="6" fill="#f9e2af"/>
+  <circle cx="62" cy="18" r="6" fill="#a6e3a1"/>
+  <text x="440" y="23" text-anchor="middle" font-size="12" fill="#6c7086">root@homeserver — /opt/cloudflare-ddns-telegram</text>
+
+  <!-- shell -->
+  <g font-size="12.5">
+    <text x="24" y="66"><tspan fill="#a6e3a1">$</tspan><tspan fill="#cdd6f4"> sudo systemctl start cloudflare-ddns.service</tspan></text>
+    <text x="24" y="88"><tspan fill="#a6e3a1">$</tspan><tspan fill="#cdd6f4"> sudo journalctl -u cloudflare-ddns.service -n 5 --no-pager</tspan></text>
+    <text x="24" y="112"><tspan fill="#6c7086">Jul 07 09:00:01 homeserver update-ddns.sh[2841]: </tspan><tspan fill="#89b4fa">[INFO]</tspan><tspan fill="#cdd6f4"> Starting DDNS check</tspan></text>
+    <text x="24" y="134"><tspan fill="#6c7086">Jul 07 09:00:02 homeserver update-ddns.sh[2841]: </tspan><tspan fill="#89b4fa">[INFO]</tspan><tspan fill="#cdd6f4"> Detected public IPv4: 203.0.113.42</tspan></text>
+    <text x="24" y="156"><tspan fill="#6c7086">Jul 07 09:00:04 homeserver update-ddns.sh[2841]: </tspan><tspan fill="#89b4fa">[INFO]</tspan><tspan fill="#cdd6f4"> Updated home.example.com: </tspan><tspan fill="#f38ba8">198.51.100.17</tspan><tspan fill="#cdd6f4"> -&gt; </tspan><tspan fill="#a6e3a1">203.0.113.42</tspan></text>
+    <text x="24" y="178"><tspan fill="#6c7086">Jul 07 09:00:05 homeserver update-ddns.sh[2841]: </tspan><tspan fill="#89b4fa">[INFO]</tspan><tspan fill="#cdd6f4"> Cloudflare already current for nas.example.com: 203.0.113.42</tspan></text>
+    <text x="24" y="200"><tspan fill="#6c7086">Jul 07 09:00:05 homeserver update-ddns.sh[2841]: </tspan><tspan fill="#89b4fa">[INFO]</tspan><tspan fill="#cdd6f4"> DDNS check completed</tspan></text>
+    <text x="24" y="236"><tspan fill="#a6e3a1">$</tspan><tspan fill="#cdd6f4"> </tspan></text>
+    <rect x="44" y="225" width="8" height="14" fill="#cdd6f4">
+      <animate attributeName="opacity" values="1;0;1" dur="1.6s" repeatCount="indefinite"/>
+    </rect>
+  </g>
+</svg>

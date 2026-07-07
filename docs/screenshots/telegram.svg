@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="460" height="532" viewBox="0 0 460 532" font-family="-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif">
+  <!-- chat background -->
+  <rect x="0" y="0" width="460" height="532" rx="10" fill="#0e1621"/>
+
+  <!-- header -->
+  <path d="M0 10 a10 10 0 0 1 10 -10 h440 a10 10 0 0 1 10 10 v46 h-460 z" fill="#17212b"/>
+  <circle cx="34" cy="28" r="16" fill="#f6821f"/>
+  <text x="34" y="33" text-anchor="middle" font-size="13" font-weight="700" fill="#ffffff">DD</text>
+  <text x="60" y="25" font-size="14" font-weight="600" fill="#ffffff">Cloudflare DDNS Bot</text>
+  <text x="60" y="42" font-size="12" fill="#6d7f8f">bot</text>
+
+  <!-- date chip -->
+  <rect x="193" y="68" width="74" height="22" rx="11" fill="#1c2a39"/>
+  <text x="230" y="83" text-anchor="middle" font-size="11.5" fill="#8fa3b3">July 7</text>
+
+  <!-- bubble 1: updated -->
+  <circle cx="34" cy="270" r="14" fill="#f6821f"/>
+  <text x="34" y="274" text-anchor="middle" font-size="11" font-weight="700" fill="#ffffff">DD</text>
+  <g>
+    <rect x="56" y="102" width="300" height="182" rx="12" fill="#182533"/>
+    <text x="72" y="128" font-size="13.5" font-weight="700" fill="#ffffff">🟢 Cloudflare DDNS Updated</text>
+    <text x="72" y="154" font-size="13"><tspan font-weight="600" fill="#ffffff">Record:</tspan><tspan fill="#d9e3ea"> home.example.com</tspan></text>
+    <text x="72" y="174" font-size="13"><tspan font-weight="600" fill="#ffffff">Type:</tspan><tspan fill="#d9e3ea"> A</tspan></text>
+    <text x="72" y="194" font-size="13"><tspan font-weight="600" fill="#ffffff">Old IP:</tspan><tspan fill="#d9e3ea"> 198.51.100.17</tspan></text>
+    <text x="72" y="214" font-size="13"><tspan font-weight="600" fill="#ffffff">New IP:</tspan><tspan fill="#d9e3ea"> 203.0.113.42</tspan></text>
+    <text x="72" y="234" font-size="13"><tspan font-weight="600" fill="#ffffff">Server:</tspan><tspan fill="#d9e3ea"> homeserver</tspan></text>
+    <text x="72" y="254" font-size="13"><tspan font-weight="600" fill="#ffffff">Time:</tspan><tspan fill="#d9e3ea"> 2026-07-07 09:00:04 UTC</tspan></text>
+    <text x="340" y="274" text-anchor="end" font-size="11" fill="#6d7f8f">09:00</text>
+  </g>
+
+  <!-- bubble 2: daily status -->
+  <circle cx="34" cy="498" r="14" fill="#f6821f"/>
+  <text x="34" y="502" text-anchor="middle" font-size="11" font-weight="700" fill="#ffffff">DD</text>
+  <g>
+    <rect x="56" y="296" width="330" height="216" rx="12" fill="#182533"/>
+    <text x="72" y="322" font-size="13.5" font-weight="700" fill="#ffffff">📡 Daily Cloudflare DDNS IP Status</text>
+    <text x="72" y="348" font-size="13"><tspan font-weight="600" fill="#ffffff">Status:</tspan><tspan fill="#a6e3a1"> OK</tspan></text>
+    <text x="72" y="368" font-size="13"><tspan font-weight="600" fill="#ffffff">Server:</tspan><tspan fill="#d9e3ea"> homeserver</tspan></text>
+    <text x="72" y="388" font-size="13"><tspan font-weight="600" fill="#ffffff">Detected IPv4:</tspan><tspan fill="#d9e3ea"> 203.0.113.42</tspan></text>
+    <text x="72" y="408" font-size="13"><tspan font-weight="600" fill="#ffffff">Detected IPv6:</tspan><tspan fill="#d9e3ea"> 2001:db8::1</tspan></text>
+    <text x="72" y="428" font-size="13"><tspan font-weight="600" fill="#ffffff">Time:</tspan><tspan fill="#d9e3ea"> 2026-07-07 09:00:06 UTC</tspan></text>
+    <text x="72" y="456" font-size="13" font-weight="600" fill="#ffffff">Records:</text>
+    <text x="72" y="478" font-size="13" fill="#d9e3ea">✅ home.example.com A — 203.0.113.42</text>
+    <text x="72" y="498" font-size="13" fill="#d9e3ea">✅ nas.example.com A — 203.0.113.42</text>
+    <text x="370" y="502" text-anchor="end" font-size="11" fill="#6d7f8f">09:00</text>
+  </g>
+</svg>

@@ -19,6 +19,18 @@ No Python, no Docker, no daemons — just `bash`, `curl`, `jq`, and systemd time
 - **systemd native** — timers for the update loop and the daily report, plus logrotate.
 - **Safe upgrades** — `upgrade.sh` updates the scripts in place while backing up and preserving your configuration.
 
+## Screenshots
+
+A DDNS check run, as seen in the journal:
+
+![Terminal output of a DDNS update run](docs/screenshots/terminal.svg)
+
+The Telegram alerts — instant update notification and the daily health report:
+
+![Telegram update alert and daily status report](docs/screenshots/telegram.svg)
+
+*Illustrative output using demo values (`example.com`, documentation IP ranges).*
+
 ## Requirements
 
 - Linux with systemd (installer uses `apt`, so Debian/Ubuntu and derivatives)
