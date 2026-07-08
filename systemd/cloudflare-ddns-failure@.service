@@ -1,0 +1,9 @@
+[Unit]
+Description=Telegram failure alert for %i
+
+[Service]
+Type=oneshot
+WorkingDirectory=__INSTALL_DIR__
+ExecStart=__INSTALL_DIR__/notify-failure.sh %i
+User=root
+Group=root

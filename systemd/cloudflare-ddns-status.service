@@ -2,6 +2,7 @@
 Description=Daily Cloudflare DDNS IP Status Telegram Report
 Wants=network-online.target
 After=network-online.target nss-lookup.target
+OnFailure=cloudflare-ddns-failure@%n.service
 
 [Service]
 Type=oneshot

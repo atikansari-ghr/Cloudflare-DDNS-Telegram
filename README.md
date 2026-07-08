@@ -11,7 +11,9 @@ No Python, no Docker, no daemons — just `bash`, `curl`, `jq`, and systemd time
 
 - **IPv4, IPv6, or both** — each record can be `A`, `AAAA`, or `BOTH`.
 - **Multiple fallback IP providers** (ipify, icanhazip, AWS checkip, ifconfig.me) with curl timeouts, so a single flaky provider never causes a false failure.
-- **Telegram notifications** — on IP change, on errors, optionally on no-change and startup.
+- **Telegram notifications** — on IP change, on errors, optionally on no-change and startup. Every send is delivery-checked against the Telegram API response and retried up to 3 times; failures are logged with the exact error.
+- **Crash alerts** — if a service itself fails, a systemd `OnFailure` hook sends a 🚨 Telegram alert with the recent journal lines.
+- **DNS verification** — with `VERIFY_DNS="yes"`, updated records are re-resolved via 1.1.1.1 to confirm propagation (DNS-only records).
 - **Daily status report** — a scheduled Telegram summary comparing every Cloudflare record against your current public IP (✅ / ⚠️ / ❌).
 - **Local state cache** — skips Cloudflare API calls entirely when the IP hasn't changed.
 - **Auto-creates missing records** in Cloudflare.
@@ -90,6 +92,7 @@ See [config/config.env.example](config/config.env.example).
 | `SEND_STARTUP` | `yes` | Send a message on startup/test runs |
 | `DAILY_STATUS_ENABLED` | `yes` | Enable the daily status report |
 | `DAILY_STATUS_TIME` | `09:00` | Time of day for the daily report (HH:MM) |
+| `VERIFY_DNS` | `yes` | After an update, verify the record resolves to the new IP via `dig @1.1.1.1` (skipped for proxied records) |
 | `LOGGING` | `yes` | Write logs to `LOG_FILE` |
 | `IPV4_PROVIDER` | `https://api.ipify.org` | Preferred IPv4 detection provider (fallbacks are built in) |
 | `IPV6_PROVIDER` | `https://api64.ipify.org` | Preferred IPv6 detection provider (fallbacks are built in) |
@@ -153,7 +156,7 @@ tail -f /opt/cloudflare-ddns-telegram/logs/cloudflare-ddns.log
 
 - **"Zone not found or token lacks access"** — the API token is missing DNS Edit permission for that zone, or the zone name in `records.conf` doesn't match Cloudflare exactly.
 - **"Unable to detect valid IPv4"** — all providers timed out; check outbound connectivity. The service already waits 30 s after boot (`ExecStartPre`) to let the network come up.
-- **No Telegram messages** — verify `TELEGRAM_ENABLED="yes"` and test the bot manually: `curl -s "https://api.telegram.org/bot<TOKEN>/sendMessage" -d "chat_id=<CHAT_ID>" -d "text=test"`.
+- **No Telegram messages** — check the journal first: failed sends are logged as `Telegram send failed` with Telegram's exact error (`HTTP 404` = malformed/empty bot token, `HTTP 400: chat not found` = wrong chat ID, `HTTP 401` = revoked token). Then test manually: `curl -s "https://api.telegram.org/bot<TOKEN>/sendMessage" -d "chat_id=<CHAT_ID>" -d "text=test"` and read the JSON response. Remember to `/start` the bot from your account once.
 - **CGNAT** — this tool publishes whatever public IP your ISP gives you. If you're behind CGNAT, that IP is shared and inbound connections won't reach you; DDNS cannot bypass CGNAT.
 
 ## Uninstall

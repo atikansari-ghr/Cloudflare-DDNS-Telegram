@@ -2,6 +2,7 @@
 Description=Cloudflare DDNS Telegram Update
 Wants=network-online.target
 After=network-online.target nss-lookup.target
+OnFailure=cloudflare-ddns-failure@%n.service
 
 [Service]
 Type=oneshot
